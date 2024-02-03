@@ -1,0 +1,16 @@
+torch
+torchvision
+matplotlib
+numpy>=1.22.3
+opencv-python
+Pillow
+PyYAML
+scipy
+tqdm>=4.64.0
+tensorboard
+seaborn
+pandas
+thop
+awscli
+botocore
+ultralytics

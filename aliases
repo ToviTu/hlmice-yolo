@@ -1,0 +1,3 @@
+alias build='docker build . --no-cache --tag=tovitu/hlmice-yolo:latest'
+alias push='docker push tovitu/hlmice-yolo:latest'
+alias detect='kubectl apply -f k8s/yolo_detect.yml'
