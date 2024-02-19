@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: tovitu-yolo-predict
+  name: tovitu-yolo-predict-caf42
 spec:
   backoffLimit: 0
   template:
@@ -16,26 +16,30 @@ spec:
         resources:
           requests:
             cpu: "1"
-            memory: "32Gi"
+            memory: "8Gi"
           limits:
             cpu: "8"
-            memory: "64Gi"
+            memory: "16Gi"
             nvidia.com/gpu: 1
 
         command: ["stdbuf", "-oL", "-eL", "/bin/bash", "-c"]
         args:
           - >-
-            aws s3 --endpoint $ENDPOINT cp s3://hengenlab/yolo/model/best.pt /models/best.pt;
-            aws s3 --endpoint $ENDPOINT cp s3://hengenlab/yolo_videos/JMG5_2A-20221122T104018-114018.mp4 /datasets/JMG5_2A-20221122T104018-114018.mp4;
-            python yolov5/detect.py --exist-ok --weights /models/best.pt --source /datasets/JMG5_2A-20221122T104018-114018.mp4 --save-csv --save-txt &&
-            zip -r result.zip yolov5/runs/detect/exp;
-            aws s3 --endpoint $ENDPOINT cp result.zip s3://hengenlab/yolo/results/
+            bash scripts/detect_parallel.sh;
             
         env:
-          - name: "DATANAME"
-            value: "/external/"
+          - name: "SUBDIR"
+            value: "CAF42"
+          - name: "VIDEODIR"
+            value: "s3://hengenlab/yolo_videos/"
           - name: "ENDPOINT"
             value: "https://s3-central.nrp-nautilus.io"
+          - name: "MODELNAME"
+            value: "homecage_best.pt"
+          - name: "ID"
+            value: "${ID}"
+          - name: "SUBDIR_LOWERCASE"
+            value: "${SUBDIR_LOWERCASE}"
 
         volumeMounts:
           - name: "prp-s3-credentials"
