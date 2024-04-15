@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: tovitu-yolo-predict-new-homecage
+  name: tovitu-bams-tryout
 spec:
   backoffLimit: 0
   template:
@@ -16,17 +16,21 @@ spec:
         resources:
           requests:
             cpu: "1"
-            memory: "16Gi"
+            memory: "64Gi"
           limits:
             cpu: "8"
-            memory: "32Gi"
+            memory: "96Gi"
             nvidia.com/gpu: 1
 
         command: ["stdbuf", "-oL", "-eL", "/bin/bash", "-c"]
         args:
           - >-
-            bash scripts/detect_parallel.sh;
-            
+            git clone https://github.com/nerdslab/bams.git;
+            cd bams/;
+            bash download_mabe.sh;
+            pip install -r requirements.txt;
+            python3 mouse_triplets.py --job train;
+
         env:
           - name: "SUBDIR"
             value: "prey_capture"
@@ -38,11 +42,15 @@ spec:
             value: "best.pt"
           - name: "ID"
             value: "${ID}"
+          - name: "SUBDIR_LOWERCASE"
+            value: "${SUBDIR_LOWERCASE}"
 
         volumeMounts:
           - name: "prp-s3-credentials"
             mountPath: "/root/.aws/credentials"
             subPath: "credentials"
+          - name: "dshm"
+            mountPath: "/dev/shm"
 
       tolerations:
         - key: "nautilus.io/chase-ci"
@@ -54,4 +62,7 @@ spec:
         - name: prp-s3-credentials
           secret:
             secretName: prp-s3-credentials
+        - name: dshm
+          emptyDir:
+            medium: Memory
     

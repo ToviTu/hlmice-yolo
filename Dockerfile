@@ -44,7 +44,7 @@ RUN apt-get install -y --no-install-recommends \
     hdf5-tools
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt --use-feature=2020-resolver
 
 RUN git clone https://github.com/ultralytics/yolov5
 

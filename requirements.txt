@@ -14,3 +14,6 @@ thop
 awscli
 botocore
 ultralytics
+jupyter
+transformers
+datasets

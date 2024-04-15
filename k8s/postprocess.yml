@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: tovitu-yolo-predict-new-homecage
+  name: tovitu-yolo-post-process
 spec:
   backoffLimit: 0
   template:
@@ -20,12 +20,12 @@ spec:
           limits:
             cpu: "8"
             memory: "32Gi"
-            nvidia.com/gpu: 1
 
         command: ["stdbuf", "-oL", "-eL", "/bin/bash", "-c"]
         args:
           - >-
-            bash scripts/detect_parallel.sh;
+            bash scripts/process_detected.sh;
+            sleep 600
             
         env:
           - name: "SUBDIR"
