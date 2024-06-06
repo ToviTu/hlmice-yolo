@@ -1,5 +1,5 @@
 # Use an official PyTorch image as a parent image
-FROM pytorch/pytorch:1.8.1-cuda11.1-cudnn8-runtime
+FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-runtime
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -41,10 +41,11 @@ RUN apt-get install -y --no-install-recommends \
     openssl \
     redis-tools \
     ca-certificates \
-    hdf5-tools
+    hdf5-tools\
+    vim
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt --use-feature=2020-resolver
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN git clone https://github.com/ultralytics/yolov5
 

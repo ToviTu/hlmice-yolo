@@ -25,7 +25,6 @@ spec:
         args:
           - >-
             bash scripts/process_detected.sh;
-            sleep 600
             
         env:
           - name: "SUBDIR"

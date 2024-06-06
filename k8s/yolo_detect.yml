@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: tovitu-yolo-predict-new-homecage
+  name: tovitu-yolo-predict-${TAG}
 spec:
   backoffLimit: 0
   template:
@@ -15,11 +15,13 @@ spec:
 
         resources:
           requests:
-            cpu: "1"
-            memory: "16Gi"
+            cpu: "2"
+            memory: "8Gi"
+            ephemeral-storage: "20Gi"
           limits:
-            cpu: "8"
-            memory: "32Gi"
+            cpu: "4"
+            memory: "16Gi"
+            ephemeral-storage: "50Gi"
             nvidia.com/gpu: 1
 
         command: ["stdbuf", "-oL", "-eL", "/bin/bash", "-c"]
@@ -30,14 +32,16 @@ spec:
         env:
           - name: "SUBDIR"
             value: "prey_capture"
+          - name: "MAX_JOBS"
+            value: "4"
+          - name: "ANIMAL"
+            value: "${ANIMAL}"
           - name: "VIDEODIR"
             value: "s3://hengenlab/yolo_videos/"
           - name: "ENDPOINT"
             value: "https://s3-central.nrp-nautilus.io"
           - name: "MODELNAME"
             value: "best.pt"
-          - name: "ID"
-            value: "${ID}"
 
         volumeMounts:
           - name: "prp-s3-credentials"
