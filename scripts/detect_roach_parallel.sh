@@ -11,7 +11,7 @@ aws s3 --endpoint $ENDPOINT cp s3://hengenlab/t.tovi/${MODELNAME} /models/${MODE
 for DATANAME in $files; do
     echo "Copying data ${DATANAME}"
     aws s3 --endpoint $ENDPOINT cp ${VIDEODIR}${SUBDIR}/${DATANAME} /datasets/${DATANAME}
-    yolo predict model="/models/${MODELNAME}" source="/datasets/${DATANAME}" save_txt=True save=False save_conf=True device=0 name=${DATANAME} &&
+    yolo predict model="/models/${MODELNAME}" source="/datasets/${DATANAME}" save_txt=True save=False save_conf=True device=0 name=${DATANAME}
     rm -f /datasets/${DATANAME} &
     ((running_jobs++))
 
@@ -23,7 +23,7 @@ done
 
 wait
 
-python scripts/compile_post_processed_new.py
+python scripts/compile_roach.py
 
 for file in $(ls | grep npy);do
     aws --endpoint $ENDPOINT s3 rm s3://hengenlab/yolo/results/roach/${SUBDIR}/${file}

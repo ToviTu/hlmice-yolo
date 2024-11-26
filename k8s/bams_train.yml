@@ -27,9 +27,9 @@ spec:
         command: ["stdbuf", "-oL", "-eL", "/bin/bash", "-c"]
         args:
           - >-
-            aws --endpoint $ENDPOINT s3 cp s3://hengenlab/mark.song/l2_out.zip /dataset;
-            unzip /dataset/l2_out.zip -d /dataset/;
-            python custom_dataset.py --data_root /dataset/l2_out/ --batch 32;
+            aws --endpoint $ENDPOINT s3 cp s3://hengenlab/mark.song/raw_cutted_mice_feature.zip /dataset;
+            unzip /dataset/raw_cutted_mice_feature.zip -d /dataset/;
+            python custom_dataset.py --data_root /dataset/raw_cutted_mice_feature/ --batch 32;
             aws --endpoint $ENDPOINT s3 cp $(ls | grep pt) s3://hengenlab/t.tovi/;
 
 

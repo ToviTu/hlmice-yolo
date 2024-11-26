@@ -46,6 +46,5 @@ RUN apt-get install -y --no-install-recommends \
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-
-RUN git clone https://github.com/ultralytics/yolov5
+RUN pip install --no-cache-dir ultralytics
 

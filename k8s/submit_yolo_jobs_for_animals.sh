@@ -1,7 +1,6 @@
 #!/bin/bash
 
-ANIMALS="JMG6"
-#ANIMALS="JMG8"
+ANIMALS="JMG1 JMG4 JMG5 JMG6 JMG7 JMG8" #ANIMALS="JMG8"
 count=0
 for a in $ANIMALS;
 do 

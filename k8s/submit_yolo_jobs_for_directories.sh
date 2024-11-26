@@ -1,6 +1,6 @@
 #!/bin/bash
 
-directories=$(aws --endpoint https://s3-central.nrp-nautilus.io s3 ls s3://hengenlab/yolo_videos/ | awk '{print $2}' | grep "AJ4")
+directories=$(aws --endpoint https://s3-central.nrp-nautilus.io s3 ls s3://hengenlab/yolo_videos/ | awk '{print $2}' | grep "prey_capture/")
 count=8
 for d in $directories;
 do 

@@ -27,7 +27,7 @@ spec:
         command: ["stdbuf", "-oL", "-eL", "/bin/bash", "-c"]
         args:
           - >-
-            bash scripts/detect_parallel.sh;
+            bash scripts/detect_roach_parallel.sh;
             
         env:
           - name: "SUBDIR"
@@ -41,7 +41,7 @@ spec:
           - name: "ENDPOINT"
             value: "https://s3-central.nrp-nautilus.io"
           - name: "MODELNAME"
-            value: "best.pt"
+            value: "best_neg.pt"
 
         volumeMounts:
           - name: "prp-s3-credentials"
